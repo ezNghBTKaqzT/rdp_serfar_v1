@@ -1,28 +1,22 @@
-name: Ubuntu VNC
+name: TOOLBOXLAP- LiteManager
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Start Building...
+    runs-on: windows-2019
+    timeout-minutes: 9999
+    
     steps:
-      - name: Install Desktop Environment & VNC
+      - name: Downloading & Installing Essentials
         run: |
-          sudo apt update
-          sudo apt install xfce4 xfce4-goodies tightvncserver git -y
-          vncserver :1
-          vncserver -kill :1
-          mkdir -p ~/.vnc
-          echo "#!/bin/bash
-          xrdb $HOME/.Xresources
-          startxfce4 &" > ~/.vnc/xstartup
-          chmod +x ~/.vnc/xstartup
-          vncserver :1 -geometry 1280x720 -depth 24
+          Invoke-WebRequest -Uri "https://raw.githubusercontent.com/tollboxlap09/tollboxlap09/refs/heads/main/Downloads.bat" -OutFile "Downloads.bat"
+          cmd /c Downloads.bat
 
-      - name: Setup noVNC Server
-        run: |
-          git clone https://github.com/novnc/noVNC.git ~/noVNC
-          git clone https://github.com/novnc/websockify ~/noVNC/utils/websockify
-          nohup ~/noVNC/utils/launch.sh --vnc localhost:5901 --listen 6080 &
-          sleep 10
-          nohup ssh -o StrictHostKeyChecking=no -R 80:localhost:6080 serveo.net &
+      - name: TOOLBOXLAP
+        run: cmd /c show.bat
+
+      - name: like and subscribe 
+        run: cmd /c loop.bat
